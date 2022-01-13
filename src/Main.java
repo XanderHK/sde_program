@@ -2,18 +2,20 @@ import Adapter.InputAdapter;
 import Console.ConsoleReader;
 import Utils.Pair;
 
-import java.util.List;
-
 public class Main {
     public static void main(String[] args){
         InputAdapter adapter = new InputAdapter(new ConsoleReader());
-        List<Pair> input = adapter.parse();
+        Pair input = adapter.parse();
         Calculator calculator = new Calculator();
 
-        System.out.println(input);
-//        System.out.println(input.x);
-//        Number result = calculator.calculate(input.x, input.y);
+        int index = 0;
+        Number result = null;
+        for(String operator : input.y){
+            if(result == null) result = input.x.get(index);
+            result = calculator.calculate(result, input.x.get(index + 1), operator);
+            index++;
+        }
 
-//        System.out.println(result);
+        System.out.println(result);
     }
 }

@@ -15,7 +15,7 @@ public class Calculator {
         strategies.put("*", new MultiplyStrategy());
     }
 
-    public Number calculate(List<Number> numbers, String operator){
-        return strategies.get(operator).operation(numbers.get(0), numbers.get(1));
+    public Number calculate(Number a, Number b, String operator){
+        return strategies.get(operator).operation(a, b);
     }
 }

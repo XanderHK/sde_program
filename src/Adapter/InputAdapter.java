@@ -16,45 +16,35 @@ public class InputAdapter {
         this.reader = reader;
     }
 
-    public List<Pair> parse(){
+    public Pair parse(){
         String rawInput = reader.readLine();
         String trimmed = rawInput.replaceAll("\\s+","");
-        List<Pair> pairs = new ArrayList<>();
-    //Splice it at index of match
-        // remove all operators and keep execute in order
-        String currentOperator = null;
-        StringBuilder currentOperation = new StringBuilder();
-        for(int i = 0; i < trimmed.length(); i++){
-            String currentChar = Character.toString(trimmed.charAt(i));
-            if(currentChar.matches("[+\\-*/.]")) {
-                if(currentOperator != null){
-                    pairs.add(convertToPair(currentOperation.toString(),currentOperator));
-                    currentOperation = new StringBuilder();
-                }
-                currentOperator = currentChar;
-            }
-            currentOperation.append(currentChar);
-        }
-        return pairs;
-    }
-
-    private Pair convertToPair(String currentOperation, String operator){
-        String[] parts = currentOperation.split(String.format("\\%s", operator));
-        System.out.println(parts[0]);
-        List<Number> numbers = getNumbers(parts);
-        return new Pair(numbers, operator);
-    }
-
-    private List<Number> getNumbers(String[] parts) {
+        List<String> operators = new ArrayList<>();
         List<Number> numbers = new ArrayList<>();
-        for(String part : parts){
-            try{
-                double parsed = Double.parseDouble(part);
-                numbers.add(parsed);
-            }catch(NumberFormatException e){
-                System.out.println("A non numeric string has been encountered.");
+        StringBuilder temp = new StringBuilder();
+        for(int i = 0; i < trimmed.length(); i++) {
+            String currentChar = Character.toString(trimmed.charAt(i));
+            if (currentChar.matches("[+\\-*/.]")) {
+                numbers.add(convertToNumber(temp.toString()));
+                temp = new StringBuilder();
+                operators.add(currentChar);
+                continue;
             }
+
+            temp.append(currentChar);
+
+            if(i == (trimmed.length() - 1)) numbers.add(convertToNumber(temp.toString()));
         }
-        return numbers;
+
+        return new Pair(numbers, operators);
+    }
+
+    private Number convertToNumber(String number){
+        try{
+            return Double.parseDouble(number);
+        }catch(NumberFormatException e){
+            System.out.println("A non numeric string has been encountered.");
+            return null;
+        }
     }
 }
