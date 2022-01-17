@@ -10,7 +10,6 @@ import java.util.List;
 public class InputAdapter {
 
     private final ConsoleReader reader;
-    private final static List<String> operators = Arrays.asList("+", "-", "/", "*");
 
     public InputAdapter(ConsoleReader reader){
         this.reader = reader;
