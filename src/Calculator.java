@@ -23,6 +23,6 @@ public class Calculator {
     }
 
     public Number calculate(Number a, Number b, String operator){
-        return strategies.get(operator).operation(a, b);
+        return strategies.get(operator).execute(a, b);
     }
 }

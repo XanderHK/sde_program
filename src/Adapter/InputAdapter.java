@@ -4,7 +4,6 @@ import Console.ConsoleReader;
 import Utils.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class InputAdapter {
