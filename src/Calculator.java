@@ -1,11 +1,11 @@
 import Operations.*;
 
 import java.util.HashMap;
-import java.util.List;
 
 public class Calculator {
 
     private final HashMap<String, OperationStrategy> strategies;
+    private static Calculator instance;
 
     Calculator(){
         strategies = new HashMap<>();
@@ -13,6 +13,13 @@ public class Calculator {
         strategies.put("+", new AddStrategy());
         strategies.put("/", new DivideStrategy());
         strategies.put("*", new MultiplyStrategy());
+    }
+
+    public static Calculator getInstance(){
+        if(instance == null){
+            instance = new Calculator();
+        }
+        return instance;
     }
 
     public Number calculate(Number a, Number b, String operator){

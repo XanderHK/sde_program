@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args){
         InputAdapter adapter = new InputAdapter(new ConsoleReader());
         Pair input = adapter.parse();
-        Calculator calculator = new Calculator();
+        Calculator calculator = Calculator.getInstance();
 
         int index = 0;
         Number result = null;
