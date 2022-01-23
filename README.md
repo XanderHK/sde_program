@@ -65,3 +65,53 @@ Once we invoke the `calculate` method and pass it 2 numbers and an operator (e.g
 ## Structural Patterns
 
 ### Adapter Pattern (Xander)
+
+
+
+
+### Adapter & Singleton Pattern Rob
+
+public class StatusAdapter {
+public static CalculatorStatusStrategy statusStrategy;
+private ConsoleReader reader;
+private static StatusAdapter instance;
+
+    public StatusAdapter(ConsoleReader reader){
+        this.reader = reader;
+    }
+
+    public String viewStatus() {
+        return statusStrategy.getStatus();
+    }
+
+    public void printStatement() {
+        System.out.println("Type: 1 to turn the calculator ON");
+        System.out.println("Type: 2 to turn the calculator OFF");
+        System.out.println("Type: 3 to RESET");
+    }
+
+    public int userInput() {
+        String rawInput = reader.readLine();
+        int convertedNumber = Integer.parseInt(rawInput);
+        return convertedNumber;
+    }
+
+    public static StatusAdapter getInstance(ConsoleReader reader){
+        if(instance == null){
+            instance = new StatusAdapter(reader);
+        }
+        return instance;
+    }
+
+}
+
+Ik probeerde een Strategy te maken met ON OFF en RESET maar het bleek lastiger dan verwacht
+dus heb ik het omgezet naar een Adapter (Structural Patterns). De adapter is nu zo gemaakt 
+dat de user kan aangeven in de console wat hij wil doen of hij de calculator wilt activeren
+deactiveren of opnieuw wilt opstarten (handig voor bij eventuele foutmeldingen).
+Ook is de StatusAdapter een tussenweg voor zowel het aanspreken van de Strategy (die helaas niet werkt).
+En de console reader dit zodat de main makkelijk gebruik zou kunnen maken van de strategy.
+
+De Singleton zorgt ervoor dat de Adapter class maar 1x wordt aangemaakt. Om zo onnodige duplicatie te voorkomen.
+Ook is deze globaal beschikbaar voor andere classes om zo te controleren wat de status is van de calculator (aan/uit/reset)
+

@@ -15,6 +15,8 @@ public class InputAdapter {
     }
 
     public Pair parse(){
+        System.out.println("Calculator ready to use, type here your variables:");
+        System.out.println("Type ON to set the calculator on");
         String rawInput = reader.readLine();
         String trimmed = rawInput.replaceAll("\\s+","");
         List<String> operators = new ArrayList<>();
