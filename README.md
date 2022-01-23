@@ -66,6 +66,44 @@ Once we invoke the `calculate` method and pass it 2 numbers and an operator (e.g
 
 ### Adapter Pattern (Xander)
 
+java
+public class InputAdapter {
+private final ConsoleReader reader;
+
+    public InputAdapter(ConsoleReader reader){
+        this.reader = reader;
+    }
+
+    public Pair parse(){
+        String rawInput = reader.readLine();
+        String trimmed = rawInput.replaceAll("\\s+","");
+        List<String> operators = new ArrayList<>();
+        List<Number> numbers = new ArrayList<>();
+        StringBuilder temp = new StringBuilder();
+        for(int i = 0; i < trimmed.length(); i++) {
+            String currentChar = Character.toString(trimmed.charAt(i));
+            if (currentChar.matches("[+\\-*/.]")) {
+                numbers.add(convertToNumber(temp.toString()));
+                temp = new StringBuilder();
+                operators.add(currentChar);
+                continue;
+            }
+
+            temp.append(currentChar);
+
+            if(i == (trimmed.length() - 1)) numbers.add(convertToNumber(temp.toString()));
+        }
+
+        return new Pair(numbers, operators);
+    }
+}
+
+InputAdapter adapter = new InputAdapter(new ConsoleReader());
+Pair input = adapter.parse();
+
+This adapters makes the input from the ConsoleReader usable to our calculator. We give the string to the InputAdapter which it uses when we call parse() which turns it into a list of operators and numbers.
+
+To make use of the adapter you create a new instance, pass it the ConsoleReader and call the parse() method
 
 
 
